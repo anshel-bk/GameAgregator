@@ -8,7 +8,6 @@
     <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
     <link rel="shortcut icon" href="{% static 'images/logo_site.png' %}" type="image/x-icon">
     <link rel="stylesheet" href="{% static 'css/fontello.css' %}">
-
     <title>{{ title }}</title>
 </head>
 <body>
@@ -40,7 +39,7 @@
       </ul>
       <form class="d-flex" role="search">
         <input class="form-control me-2" type="search" placeholder="Поиск" aria-label="Поиск">
-        <button class="btn btn-outline-success" type="submit">Поиск</button>
+        <button class="btn btn-outline-success" style="background-color: #04f6af" type="submit">Поиск</button>
       </form>
     </div>
   </div>
@@ -49,8 +48,9 @@
     <br>
     {% block content %}
     {% endblock content %}
+    <br>
+    <br>
     <div href="#footer" class="btn btn-lg text-uppercase">
-
     </div>
 		<p>&copy; 2022 Частичное или полное копирование информации с данного сайта для распространения на других ресурсах, в том числе и бумажных, строго запрещено.</p>
     <footer id="footer">
