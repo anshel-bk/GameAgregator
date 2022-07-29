@@ -4,7 +4,7 @@ from django.test import TestCase
 from game_info_part.models import Article
 
 
-class QuestionModelTests(TestCase):
+class ArticleTests(TestCase):
 
     def test_check_published(self):
         check_pub = all([obj.is_published for obj in Article.objects.all()])
