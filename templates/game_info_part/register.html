@@ -1,0 +1,40 @@
+{% extends 'game_info_part/base.html' %}
+{% load static %}
+{% block content %}
+    <form method="post">
+  <div class="row justify-content-center">
+    <div class="col-md-8 p-5">
+      <div class="card">
+        <div class="card-header">Зарегистрироваться</div>
+          <div class="card-body">
+          <div class="form-error">{{ form.non_field_errors }}</div>
+              {% for field in form %}
+              {% csrf_token %}
+                <div class="form-group row my-3">
+                  <label for="{{ field.id_for_label }}">
+                    {{ field.label }}
+                      {% if field.field.required %}
+                        <span class="required text-danger">*</span>
+                          {{ field }}
+                      {% endif %}
+                  </label>
+                    {% if field.help_text %}
+                      <small
+                         id="{{ field.id_for_label }}-help"
+                         class="form-text text-muted"
+                      >
+                        {{ field.help_text|safe }}
+                      </small>
+                    {% endif %}
+                </div>
+              {% endfor %}
+              <div class="col-md-6 offset-md-4">
+                <button type="submit" class="btn btn-primary">
+                  Зарегистрироваться
+                </button>
+              </div>
+          </div> <!-- card body -->
+        </div> <!-- card -->
+      </div> <!-- col -->
+  </div> <!-- row -->
+{% endblock content %}

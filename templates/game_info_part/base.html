@@ -13,7 +13,7 @@
 <body>
 <nav class="navbar navbar-expand-lg" style="background-color: #0a53be">
   <div class="container-fluid">
-    <a class="navbar-brand" href="#">Playstation Fan</a>
+    <a class="navbar-brand" href="{% url 'home' %}">Playstation Fan</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Переключатель навигации">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -25,18 +25,22 @@
         <li class="nav-item">
           <a class="nav-link" href="#">Игры</a>
         </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            PSN
-          </a>
-          <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
-            <li><a class="dropdown-item" href="#">О нас</a></li>
-            <li><a class="dropdown-item" href="#">Регистрация</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Что-то еще здесь</a></li>
-          </ul>
+          {% if not request.user.is_authenticated %}
+          <li class="nav-item">
+          <a class="nav-link" href="#">Добавить статью</a>
         </li>
+          <li class="nav-item">
+          <a class="nav-link" href="{% url 'login' %}">Вход</a>
+        </li>
+          <li class="nav-item">
+          <a class="nav-link" href="{% url 'register' %}">Регистрация</a>
+          {% endif %}
+        </li>
+
       </ul>
+        {% if request.user.is_authenticated %}
+                <li class="reg_log"> {{user.username}} | <a href="{% url 'logout' %}">Выйти</a></li>
+    {% endif %}
       <form class="d-flex" role="search">
         <input class="form-control me-2" type="search" placeholder="Поиск" aria-label="Поиск">
         <button class="btn btn-outline-success" style="background-color: #04f6af" type="submit">Поиск</button>
@@ -46,15 +50,18 @@
 </nav>
     <br>
     <br>
+
     {% block content %}
     {% endblock content %}
     <br>
     <br>
+    <div>
     <div href="#footer" class="btn btn-lg text-uppercase">
     </div>
 		<p>&copy; 2022 Частичное или полное копирование информации с данного сайта для распространения на других ресурсах, в том числе и бумажных, строго запрещено.</p>
     <footer id="footer">
     </footer>
+    </div>
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
 </body>
 </html>

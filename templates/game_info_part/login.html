@@ -1,0 +1,11 @@
+{% extends 'game_info_part/base.html' %}
+{% block content %}
+    <h1>{{title}}</h1>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <div class="form-error">{{ f.errors }}</div>
+    <button type="submit">Войти</button>
+</form>
+{% endblock content %}
