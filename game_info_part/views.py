@@ -1,23 +1,33 @@
 from django.contrib.auth import login, logout
 from django.contrib.auth.views import LoginView
+from django.core.paginator import Paginator
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 
 # Create your views here.
 from django.urls import reverse_lazy
-
 from .forms import RegisterUserForm, LoginUserForm
-from .models import Article
-from django.views.generic import TemplateView, CreateView
+from .models import Article, AuthorArticle
+from django.views.generic import TemplateView, CreateView, ListView
 
 
-class HomePage(TemplateView):
+class HomePage(ListView):
     template_name = "game_info_part/home.html"
+    paginate_by = 6
+    model = Article
 
     def get_context_data(self, **kwargs):
-        articles = Article.objects.all()
-        context = {"title": "Главная страница", "articles": articles}
+        articles = Article.objects.filter(is_published=True)
+        article_list = Article.objects.all()
+        paginator = Paginator(articles,6)  # Show 25 contacts per page.
+
+        page_number = self.request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
+        context = {"title": "Главная страница",
+                   'page_obj': page_obj}
         return context
+
+
 
 
 class RegisterUser(CreateView):
@@ -57,5 +67,5 @@ class ShowArticle(TemplateView):
 
     def get_context_data(self, *, object_list=None, article_slug=None, **kwargs):
         data = Article.objects.get(slug=article_slug)
-        context = {"data": data,"title":data.title}
+        context = {"data": data, "title": data.title}
         return context

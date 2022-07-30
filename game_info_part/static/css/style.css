@@ -18,3 +18,39 @@
     color: #151414 !important;
     text-align: left;
 }
+
+.list-pages {
+	text-align: center;
+	margin: 0 0 20px 0;
+}
+.list-pages ul {
+	margin: 20px 0 0 0;
+	padding: 0;
+	list-style: none;
+}
+.list-pages ul li {
+	display: inline-block;
+	margin: 0 20px 0 0;
+}
+.page-num {
+	color: #000;
+	font-size: 24px;
+	text-decoration: none;
+}
+.list-pages .page-num, .page-num-selected {
+	display: inline-block;
+	width: 64px;
+	height: 64px;
+	padding: 16px 0 0 0;
+	border: 1px solid #1252e3;
+	border-radius: 40px;
+}
+.list-pages .page-num:hover {
+	box-shadow: 3px 3px 1px #d0d0d0;
+}
+.list-pages .page-num-selected {
+	border: cornflowerblue;
+	color: #000;
+	font-size: 20px;
+}
+
