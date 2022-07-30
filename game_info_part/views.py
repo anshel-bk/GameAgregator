@@ -1,5 +1,6 @@
 from django.contrib.auth import login, logout
 from django.contrib.auth.views import LoginView
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
 
 # Create your views here.
@@ -49,3 +50,12 @@ class LoginUser(LoginView):
 def logout_user(request):
     logout(request)
     return redirect('home')
+
+
+class ShowArticle(TemplateView):
+    template_name = 'game_info_part/show_article.html'
+
+    def get_context_data(self, *, object_list=None, article_slug=None, **kwargs):
+        data = Article.objects.get(slug=article_slug)
+        context = {"data": data,"title":data.title}
+        return context

@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- Bootstrap CSS -->
     <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
     <link rel="shortcut icon" href="{% static 'images/logo_site.png' %}" type="image/x-icon">
     <link rel="stylesheet" href="{% static 'css/fontello.css' %}">
     <title>{{ title }}</title>
@@ -13,7 +14,7 @@
 <body>
 <nav class="navbar navbar-expand-lg" style="background-color: #0a53be">
   <div class="container-fluid">
-    <a class="navbar-brand" href="{% url 'game_info_part:home' %}">Playstation Fan</a>
+    <a class="navbar-brand" href="{% url 'home' %}">Playstation Fan</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Переключатель навигации">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -30,16 +31,16 @@
           <a class="nav-link" href="#">Добавить статью</a>
         </li>
           <li class="nav-item">
-          <a class="nav-link" href="{% url 'game_info_part:login' %}">Вход</a>
+          <a class="nav-link" href="{% url 'login' %}">Вход</a>
         </li>
           <li class="nav-item">
-          <a class="nav-link" href="{% url 'game_info_part:register' %}">Регистрация</a>
+          <a class="nav-link" href="{% url 'register' %}">Регистрация</a>
           {% endif %}
         </li>
 
       </ul>
         {% if request.user.is_authenticated %}
-                <li class="reg_log"> {{user.username}} | <a href="{% url 'game_info_part:logout' %}">Выйти</a></li>
+                <li class="reg_log"> {{user.username}} | <a href="{% url 'logout' %}">Выйти</a></li>
     {% endif %}
       <form class="d-flex" role="search">
         <input class="form-control me-2" type="search" placeholder="Поиск" aria-label="Поиск">

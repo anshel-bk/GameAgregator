@@ -1,0 +1,20 @@
+
+.round {
+    position: absolute;
+    width: 62px;
+    height: 62px;
+    margin: 0 auto 5px;
+    border-radius: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #87f1f1;
+    border: 2px solid ;
+}
+
+.title {
+    display: block;
+    font: normal 1.2rem/1 Arial, sans-serif !important;
+    color: #151414 !important;
+    text-align: left;
+}

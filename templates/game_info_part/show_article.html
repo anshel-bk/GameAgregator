@@ -1,0 +1,20 @@
+{% extends 'game_info_part/base.html' %}
+{% block content %}
+{% load static %}
+    <h5 class="display-6">{{ data.title }}</h5>
+    <br>
+    <h3><strong>{{ data.name_game | title }}</strong></h3>
+    <br>
+    <p></p>{{ data.contains | linebreaks | ljust:"20" }}
+    <br>
+<figure class="figure">
+  <img src="{% get_media_prefix %}{{ data.preview_picture }}" class="figure-img img-fluid rounded" alt="Превью картинка" width="500" height="400">
+  <figcaption class="figure-caption"></figcaption>
+</figure>
+    <span class="title">Оценка<br>статьи</span><br>
+    <div href="/change_rating" class="round">{{ data.rating }}</div>
+    <br>
+    <br><br>
+    <p class="text-dark">{{ data.date_published }}</p>
+    <br>
+{% endblock content %}
