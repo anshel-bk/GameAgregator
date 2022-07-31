@@ -26,10 +26,11 @@
         <li class="nav-item">
           <a class="nav-link" href="#">Игры</a>
         </li>
-          {% if not request.user.is_authenticated %}
+          {% if  request.user.is_authenticated %}
           <li class="nav-item">
-          <a class="nav-link" href="#">Добавить статью</a>
+          <a class="nav-link" href="{% url 'add_article' %}">Добавить статью</a>
         </li>
+              {% else %}
           <li class="nav-item">
           <a class="nav-link" href="{% url 'login' %}">Вход</a>
         </li>
