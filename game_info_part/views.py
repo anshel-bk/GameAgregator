@@ -83,3 +83,7 @@ def add_article(request):
         form = AddArticleForm()
 
     return render(request, 'game_info_part/add_article.html', {'title': 'Добавление статьи', 'form': form})
+
+
+def user_profile(request):
+    return render(request, 'game_info_part/user_profile.html')
