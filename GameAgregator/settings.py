@@ -80,9 +80,9 @@ WSGI_APPLICATION = 'GameAgregator.wsgi.application'
 DATABASES = {
         'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'game_agregator',
-        'USER': 'postgres',
-        'PASSWORD': 'Pkjysq45',
+        'NAME': 'name',
+        'USER': 'user',
+        'PASSWORD': 'password',
         'HOST': '127.0.0.1',
         'PORT': '5432'
 }
