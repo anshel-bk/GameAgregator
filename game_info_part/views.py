@@ -1,7 +1,8 @@
 from django.contrib.auth import login, logout
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LoginView
 from django.core.paginator import Paginator
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseNotFound
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 
@@ -70,6 +71,7 @@ class ShowArticle(TemplateView):
         return context
 
 
+@login_required
 def add_article(request):
     if request.method == 'POST':
         form = AddArticleForm(request.POST, request.FILES)
@@ -102,3 +104,7 @@ def search(request):
     context = {"title": f"Результаты поиска по запросу {search_value} ",
                "articles": search_results}
     return render(request, template_name=template, context=context)
+
+
+def pageNotFound(request, exception):
+    return render(request,'game_info_part/handler_404.html')
