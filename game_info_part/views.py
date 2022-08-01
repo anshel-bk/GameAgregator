@@ -10,6 +10,7 @@ from .models import Article, AuthorArticle
 from django.views.generic import TemplateView, CreateView, ListView
 
 from .services.form_data import slugify, adding_necessary_data
+from .services.search_module import search_by_all
 
 
 class HomePage(ListView):
@@ -24,7 +25,7 @@ class HomePage(ListView):
         page_number = self.request.GET.get('page')
         page_obj = paginator.get_page(page_number)
         context = {"title": "Главная страница",
-                   'page_obj': page_obj}
+                   'articles': page_obj}
         return context
 
 
@@ -86,4 +87,18 @@ def add_article(request):
 
 
 def user_profile(request):
-    return render(request, 'game_info_part/user_profile.html')
+    username = request.user.username
+    context = {"title": f"Страница пользователя {username}", 'username': username}
+    return render(request, 'game_info_part/user_profile.html', context)
+
+
+def search(request):
+    search_value = request.POST.get("search_value")
+    search_results = search_by_all(search_value)
+    if not search_results:
+        template = 'game_info_part/empty_search.html'
+    else:
+        template = 'game_info_part/search.html'
+    context = {"title": f"Результаты поиска по запросу {search_value} ",
+               "articles": search_results}
+    return render(request, template_name=template, context=context)

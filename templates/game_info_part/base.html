@@ -43,12 +43,14 @@
         {% if request.user.is_authenticated %}
                 <li class="reg_log"><a href="{% url 'user_profile' %}"> {{user.username}} | <a href="{% url 'logout' %}">Выйти</a></li>
     {% endif %}
-      <form class="d-flex" role="search">
-        <input class="form-control me-2" type="search" placeholder="Поиск" aria-label="Поиск">
-        <button class="btn btn-outline-success" style="background-color: #04f6af" type="submit">Поиск</button>
+
+      <form class="d-flex" role="search" action="{% url 'search' %}" target="_blank" method="post" >
+        {% csrf_token %}
+        <input class="form-control me-2" type="search" placeholder="Автор или статья" aria-label="Поиск" name="search_value">
+        <button class="btn btn-outline-success" style="background-color: #a0e7fd" type="submit">Поиск</button>
       </form>
     </div>
-  </div>
+    </div>
 </nav>
     <br>
     <br>

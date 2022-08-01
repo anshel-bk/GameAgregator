@@ -54,48 +54,24 @@
     </div>
   </section>
 
-
-  <div class="album py-5 bg-light">
-    <div class="container">
-
-      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-{% for article in page_obj %}
-        <div class="col">
-          <div class="card shadow-sm">
-            <img src="{% get_media_prefix %}{{article.preview_picture}}" alt="Картинка-превью" class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Превью-картинка" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em"><strong>{{ article.title }}</strong></text></img>
-            <div class="card-body">
-              <p class="card-text">{{ article.contains | truncatewords:50 }}</p>
-              <div class="d-flex justify-content-between align-items-center">
-                <div class="btn-group">
-
-                <form action="{{ article.get_absolute_url }}" target="_blank">
-   <button class="btn btn-sm btn-outline-secondary" >Просмотр статьи</button>
-                    <button type="button" class="btn btn-sm btn-outline-secondary">Автор статьи: {{ article.author }}</button></form>
-                </div>
-                <small class="text-muted">Рейтинг статьи: {{ article.rating }}</small>
-              </div>
-            </div>
-          </div>
-        </div>
-        <br>
-{% endfor%}
+{% include 'game_info_part/includes/show_games.html' %}
 	<div class="content-text">
-{% if page_obj.has_other_pages %}
+{% if articles.has_other_pages %}
 <nav class="list-pages">
     <ul>
-{% if page_obj.has_previous %}
+{% if articles.has_previous %}
 <li class="page-num">
-	<a href="?page={{ page_obj.previous_page_number }}">&lt</a>
+	<a href="?page={{ articles.previous_page_number }}">&lt</a>
 </li>
 {% endif %}
         {% for p in paginator.page_range %}
-		{% if page_obj.number == p %}
+		{% if articles.number == p %}
         <li class="page-num page-num-selected">{{ p }}</li>
 		{% endif %}
         {% endfor %}
-{% if page_obj.has_next %}
+{% if articles.has_next %}
 <li class="page-num">
-	<a href="?page={{ page_obj.next_page_number }}">&gt;</a>
+	<a href="?page={{ articles.next_page_number }}">&gt;</a>
 </li>
 {% endif %}
     </ul>
