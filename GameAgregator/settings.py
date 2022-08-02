@@ -12,10 +12,11 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 import os
 from pathlib import Path
 from os import getenv
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
+from captcha.conf.settings import *
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
@@ -23,12 +24,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.getenv("SECRET_KEY")
 
-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1']
-
 
 # Application definition
 
@@ -40,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'game_info_part.apps.GameInfoPartConfig',
+    'captcha',
 ]
 
 MIDDLEWARE = [
@@ -73,21 +73,19 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'GameAgregator.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
 DATABASES = {
-        'default': {
+    'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'name',
-        'USER': 'user',
-        'PASSWORD': 'password',
+        'NAME': 'game_agregator',
+        'USER': 'postgres',
+        'PASSWORD': 'Pkjysq45',
         'HOST': '127.0.0.1',
         'PORT': '5432'
+    }
 }
-}
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
@@ -107,7 +105,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
 
@@ -118,7 +115,6 @@ TIME_ZONE = 'Asia/Krasnoyarsk'
 USE_I18N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
@@ -132,3 +128,6 @@ MEDIA_URL = '/media/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+CAPTCHA_IMAGE_SIZE = (130, 40)
+CAPTCHA_BACKGROUND_COLOR = '#62dee9'
+CAPTCHA_CHALLENGE_FUNCT = 'captcha.helpers.math_challenge'

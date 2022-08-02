@@ -1,6 +1,7 @@
 from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LoginView
+from django.core.exceptions import SuspiciousOperation
 
 from django.core.paginator import Paginator
 
@@ -82,8 +83,8 @@ def add_article(request):
                 data = adding_necessary_data(form.cleaned_data, request)
                 Article.objects.create(**data)
                 return redirect('home')
-            except Exception as ex:
-                form.add_error(None, f"Ошибка добавления статьи.возникло исключение {ex}")
+            except SuspiciousOperation:
+                form.add_error(None, f"Ошибка добавления статьи")
     else:
         form = AddArticleForm()
 
