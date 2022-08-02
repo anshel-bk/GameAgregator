@@ -16,35 +16,32 @@
   <div class="container-fluid">
     <a class="navbar-brand" href="{% url 'home' %}">GameMaG</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Переключатель навигации">
-      <span class="navbar-toggler-icon"></span>
+    <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarScroll">
       <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
         <li class="nav-item">
-          <a class="nav-link" href="#">Игры</a>
+        <a class="nav-link" href="#">Игры</a>
         </li>
           <li class="nav-item">
           <a class="nav-link" href="{% url 'home' %}">Главная</a>
         </li>
+        {% if request.user.is_authenticated %}
+            <li class="nav-item">
+            <a class="nav-link" href="{% url 'add_article' %}">Добавить статью</a>
         </li>
-          {% if request.user.is_authenticated %}
+        {% else %}
           <li class="nav-item">
-          <a class="nav-link" href="{% url 'add_article' %}">Добавить статью</a>
-        </li>
-              {% else %}
-          <li class="nav-item">
-          <a  class="nav-link" href="{% url 'login' %}">Вход</a>
+          <a class="nav-link" href="{% url 'login' %}">Вход</a>
         </li>
           <li class="nav-item">
           <a class="nav-link" href="{% url 'register' %}">Регистрация</a>
           {% endif %}
         </li>
-
       </ul>
         {% if request.user.is_authenticated %}
-                <li class="reg_log"><a href="{% url 'user_profile' %}"> {{user.username}} | <a href="{% url 'logout' %}">Выйти</a></li>
-    {% endif %}
-
+            <li class="reg_log"><a href="{% url 'user_profile' %}"> {{user.username}} | <a href="{% url 'logout' %}">Выйти</a></li>
+        {% endif %}
       <form class="d-flex" role="search" action="{% url 'search' %}" target="_blank" method="post" >
         {% csrf_token %}
         <input class="form-control me-2" type="search" placeholder="Автор или статья" aria-label="Поиск" name="search_value">
@@ -55,7 +52,6 @@
 </nav>
     <br>
     <br>
-
     {% block content %}
     {% endblock content %}
     <br>

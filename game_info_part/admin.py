@@ -1,10 +1,7 @@
 from django.contrib import admin
-from django.utils.safestring import mark_safe
 
 from game_info_part.models import AuthorArticle, Article
 
-
-# Register your models here.
 
 @admin.register(Article)
 class AdminArticle(admin.ModelAdmin):
@@ -18,4 +15,3 @@ class AdminArticle(admin.ModelAdmin):
 class AdminAuthorArticle(admin.ModelAdmin):
     list_display = ('author',)
     search_fields = ('author',)
-

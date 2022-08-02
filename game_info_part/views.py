@@ -1,16 +1,18 @@
 from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LoginView
+
 from django.core.paginator import Paginator
-from django.http import HttpResponse, HttpResponseNotFound
+
 from django.shortcuts import render, redirect
+
 from django.urls import reverse_lazy
 
 from .forms import RegisterUserForm, LoginUserForm, AddArticleForm
-from .models import Article, AuthorArticle
+from .models import Article
 from django.views.generic import TemplateView, CreateView, ListView
 
-from .services.form_data import slugify, adding_necessary_data
+from .services.form_data import adding_necessary_data
 from .services.search_module import search_by_all
 
 
@@ -107,4 +109,5 @@ def search(request):
 
 
 def pageNotFound(request, exception):
-    return render(request,'game_info_part/handler_404.html')
+    return render(request, 'game_info_part/handler_404.html')
+

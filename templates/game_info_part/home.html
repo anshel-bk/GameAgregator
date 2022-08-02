@@ -1,27 +1,26 @@
 {% extends 'game_info_part/base.html' %}
 {% load static %}
 {% block content %}
-
-    <div class="container">
-        <div id="carouselExampleFade" class="carousel slide carousel-fade" data-bs-ride="carousel">
-  <div class="carousel-inner">
+<div class="container">
+    <div id="carouselExampleFade" class="carousel slide carousel-fade" data-bs-ride="carousel">
+    <div class="carousel-inner">
     <div class="carousel-item active" data-bs-interval="1000">
         <div class="carousel-caption d-none d-md-block">
         <h2>Старший разработчик Naughty Dog заявил, что ремейк The Last of Us выйдет на ПК «очень скоро»</h2>
-      </div>
-      <img src="{% static 'images/slides/font_1.png' %}" class="d-block w-100" alt="...">
+    </div>
+    <img src="{% static 'images/slides/font_1.png' %}" class="d-block w-100" alt="...">
     </div>
     <div class="carousel-item" data-bs-interval="2000">
         <div class="carousel-caption d-none d-md-block">
         <h2>Необходимый минимум: впечатления от ремастера Uncharted 4 для PS5</h2>
-      </div>
-      <img src="{% static 'images/slides/font_2.jpeg' %}" class="d-block w-100" alt="...">
+    </div>
+     <img src="{% static 'images/slides/font_2.jpeg' %}" class="d-block w-100" alt="...">
     </div>
     <div class="carousel-item" data-bs-interval="3000">
         <div class="carousel-caption d-none d-md-block">
         <h2>God of War Ragnarök выйдет 9 ноября — кинематографический трейлер и детали игры</h2>
-      </div>
-      <img src="{% static 'images/slides/font_3.jpeg' %}" class="d-block w-100" alt="...">
+    </div>
+    <img src="{% static 'images/slides/font_3.jpeg' %}" class="d-block w-100" alt="...">
     </div>
   </div>
   <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade"  data-bs-slide="prev">
@@ -36,8 +35,6 @@
     </div>
     <br>
     <br>
-
-
   <section class="py-5 text-center container">
     <div class="row py-lg-5">
       <div class="col-lg-6 col-md-8 mx-auto">
@@ -50,7 +47,6 @@
       </div>
     </div>
   </section>
-
 {% include 'game_info_part/includes/show_games.html' %}
 	<div class="content-text">
 {% if articles.has_other_pages %}
@@ -62,17 +58,17 @@
 </li>
 {% endif %}
         {% for p in paginator.page_range %}
-		{% if articles.number == p %}
-        <li class="page-num page-num-selected">{{ p }}</li>
-		{% endif %}
+		    {% if articles.number == p %}
+            <li class="page-num page-num-selected">{{ p }}</li>
+		    {% endif %}
         {% endfor %}
 {% if articles.has_next %}
-<li class="page-num">
+    <li class="page-num">
 	<a href="?page={{ articles.next_page_number }}">&gt;</a>
-</li>
+    </li>
 {% endif %}
-    </ul>
+</ul>
 </nav>
 {% endif %}
-	</div>
+</div>
 {% endblock content %}
