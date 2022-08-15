@@ -9,10 +9,11 @@ from django.shortcuts import render, redirect
 
 from django.urls import reverse_lazy
 
-from .forms import RegisterUserForm, LoginUserForm, AddArticleForm
+from .forms import RegisterUserForm, LoginUserForm, AddArticleForm, ChangeRating
 from .models import Article
 from django.views.generic import TemplateView, CreateView, ListView
 
+from .services.change_rating import change_rating_func
 from .services.form_data import adding_necessary_data
 from .services.search_module import search_by_all
 
@@ -70,7 +71,8 @@ class ShowArticle(TemplateView):
 
     def get_context_data(self, *, object_list=None, article_slug=None, **kwargs):
         data = Article.objects.get(slug=article_slug)
-        context = {"data": data, "title": data.title}
+        form_rating = ChangeRating()
+        context = {"data": data, "title": data.title, "form": form_rating}
         return context
 
 
@@ -109,6 +111,13 @@ def search(request):
     return render(request, template_name=template, context=context)
 
 
+def change_rating(request, article_slug):
+    user = request.user.username
+    slug = article_slug
+    grade = request.POST['rating']
+    change_rating_func(user, slug, grade)
+    return redirect('article', article_slug=slug)
+
+
 def pageNotFound(request, exception):
     return render(request, 'game_info_part/handler_404.html')
-

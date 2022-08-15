@@ -12,9 +12,14 @@
   <figcaption class="figure-caption"></figcaption>
 </figure>
     <span class="title">Оценка<br>статьи</span><br>
-    <div href="/change_rating" class="round">{{ data.rating }}</div>
+    <div href="{% url 'change_rating' article_slug=data.slug %}" class="round">{{ data.rating }}</div>
     <br>
     <br><br>
+    <form action="{% url 'change_rating' article_slug=data.slug%}" method="post">
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit" value="Подтвердить">
+</form>
     <p class="text-dark">{{ data.date_published }}</p>
     <br>
 {% endblock content %}

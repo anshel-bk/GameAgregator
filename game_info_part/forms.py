@@ -56,3 +56,8 @@ class AddArticleForm(forms.ModelForm):
             'contains': forms.Textarea(
                 attrs={'cols': 70, 'rows': 8}),
         }
+
+
+class ChangeRating(forms.Form):
+    CHOICES = [tuple([str(i), i]) for i in range(1, 11)]
+    rating = forms.ChoiceField(label="Изменить рейтинг", choices=CHOICES)
