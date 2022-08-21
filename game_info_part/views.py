@@ -1,6 +1,7 @@
 from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LoginView
+from django.core.exceptions import SuspiciousOperation
 
 from django.core.paginator import Paginator
 
@@ -8,10 +9,11 @@ from django.shortcuts import render, redirect
 
 from django.urls import reverse_lazy
 
-from .forms import RegisterUserForm, LoginUserForm, AddArticleForm
+from .forms import RegisterUserForm, LoginUserForm, AddArticleForm, ChangeRating
 from .models import Article
 from django.views.generic import TemplateView, CreateView, ListView
 
+from .services.change_rating import change_rating_func
 from .services.form_data import adding_necessary_data
 from .services.search_module import search_by_all
 
@@ -22,13 +24,13 @@ class HomePage(ListView):
     model = Article
 
     def get_context_data(self, **kwargs):
-        articles = Article.objects.filter(is_published=True)
+        articles = Article.objects.filter(is_published=True).order_by('rating').reverse()
         paginator = Paginator(articles, 6)
 
         page_number = self.request.GET.get('page')
         page_obj = paginator.get_page(page_number)
         context = {"title": "Главная страница",
-                   'articles': page_obj}
+                   'page_obj': page_obj}
         return context
 
 
@@ -69,7 +71,8 @@ class ShowArticle(TemplateView):
 
     def get_context_data(self, *, object_list=None, article_slug=None, **kwargs):
         data = Article.objects.get(slug=article_slug)
-        context = {"data": data, "title": data.title}
+        form_rating = ChangeRating()
+        context = {"data": data, "title": data.title, "form": form_rating}
         return context
 
 
@@ -82,8 +85,8 @@ def add_article(request):
                 data = adding_necessary_data(form.cleaned_data, request)
                 Article.objects.create(**data)
                 return redirect('home')
-            except Exception as ex:
-                form.add_error(None, f"Ошибка добавления статьи.возникло исключение {ex}")
+            except SuspiciousOperation:
+                form.add_error(None, f"Ошибка добавления статьи")
     else:
         form = AddArticleForm()
 
@@ -108,6 +111,12 @@ def search(request):
     return render(request, template_name=template, context=context)
 
 
+def change_rating(request, article_slug):
+    user = request.user.username
+    grade = request.POST['rating']
+    change_rating_func(user, article_slug, grade)
+    return redirect('article', article_slug=article_slug)
+
+
 def pageNotFound(request, exception):
     return render(request, 'game_info_part/handler_404.html')
-

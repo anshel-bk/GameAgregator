@@ -21,7 +21,8 @@ from game_info_part.views import pageNotFound
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('game_info_part.urls'))
+    path('', include('game_info_part.urls')),
+    path('captcha/', include('captcha.urls')),
 ]
 
 handler404 = pageNotFound

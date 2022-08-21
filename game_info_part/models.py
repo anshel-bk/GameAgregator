@@ -57,3 +57,18 @@ class AuthorArticle(models.Model):
 
     def __str__(self):
         return self.author
+
+
+class GradesArticle(models.Model):
+
+    slug_article = models.SlugField(
+        verbose_name="Слаг",
+        max_length=255)
+
+    grade = models.IntegerField(
+        verbose_name="Оценка"
+    )
+
+    username = models.CharField(
+        verbose_name="Никнейм пользователя",
+        max_length=255)
