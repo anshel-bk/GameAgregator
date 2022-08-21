@@ -24,13 +24,13 @@ class HomePage(ListView):
     model = Article
 
     def get_context_data(self, **kwargs):
-        articles = Article.objects.filter(is_published=True)
+        articles = Article.objects.filter(is_published=True).order_by('rating').reverse()
         paginator = Paginator(articles, 6)
 
         page_number = self.request.GET.get('page')
         page_obj = paginator.get_page(page_number)
         context = {"title": "Главная страница",
-                   'articles': page_obj}
+                   'page_obj': page_obj}
         return context
 
 
@@ -113,10 +113,9 @@ def search(request):
 
 def change_rating(request, article_slug):
     user = request.user.username
-    slug = article_slug
     grade = request.POST['rating']
-    change_rating_func(user, slug, grade)
-    return redirect('article', article_slug=slug)
+    change_rating_func(user, article_slug, grade)
+    return redirect('article', article_slug=article_slug)
 
 
 def pageNotFound(request, exception):
