@@ -110,7 +110,7 @@ def search(request):
                "articles": search_results}
     return render(request, template_name=template, context=context)
 
-
+@login_required
 def change_rating(request, article_slug):
     user = request.user.username
     grade = request.POST['rating']

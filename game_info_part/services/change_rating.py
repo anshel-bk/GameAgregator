@@ -17,7 +17,7 @@ def change_grade(current_article: Article, user: str, article_slug: str, user_ra
     current_grade.grade = user_rating
     current_grade.save()
     grades = [obj.grade for obj in GradesArticle.objects.filter(slug_article=article_slug)]
-    current_article.rating = sum(grades) / len(grades)
+    current_article.rating = round(sum(grades) / len(grades),2)
     current_article.save()
 
 
@@ -25,5 +25,5 @@ def create_new_grade(current_article: Article, user: str, article_slug: str, use
     """Функция изменения при создании новой оценки"""
     GradesArticle.objects.create(slug_article=article_slug, grade=user_rating, username=user)
     grades = [obj.grade for obj in GradesArticle.objects.filter(slug_article=article_slug)]
-    current_article.rating = sum(grades) / len(grades)
+    current_article.rating = round(sum(grades) / len(grades),2)
     current_article.save()

@@ -15,11 +15,13 @@
     <div href="{% url 'change_rating' article_slug=data.slug %}" class="round">{{ data.rating }}</div>
     <br>
     <br><br>
+    {% if request.user.is_authenticated %}
     <form action="{% url 'change_rating' article_slug=data.slug%}" method="post">
     {% csrf_token %}
     {{ form }}
     <input type="submit" value="Подтвердить">
 </form>
+    {% endif %}
     <p class="text-dark">{{ data.date_published }}</p>
     <br>
 {% endblock content %}
