@@ -4,13 +4,14 @@ from django.contrib.auth.views import LoginView
 from django.core.exceptions import SuspiciousOperation
 
 from django.core.paginator import Paginator
+from django.http import HttpResponseRedirect
 
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 
 from django.urls import reverse_lazy
 
-from .forms import RegisterUserForm, LoginUserForm, AddArticleForm, ChangeRating
-from .models import Article
+from .forms import RegisterUserForm, LoginUserForm, AddArticleForm, ChangeRating, CommentForm
+from .models import Article, Comment
 from django.views.generic import TemplateView, CreateView, ListView
 
 from .services.change_rating import change_rating_func
@@ -70,10 +71,21 @@ class ShowArticle(TemplateView):
     template_name = 'game_info_part/show_article.html'
 
     def get_context_data(self, *, object_list=None, article_slug=None, **kwargs):
+        comment_form = CommentForm()
         data = Article.objects.get(slug=article_slug)
         form_rating = ChangeRating()
-        context = {"data": data, "title": data.title, "form": form_rating}
+        context = {"data": data, "title": data.title, "form": form_rating,"comment_form":comment_form}
         return context
+
+    def post(self, request, article_slug, *args, **kwargs):
+        comment_form = CommentForm(request.POST)
+        if comment_form.is_valid():
+            text = request.POST['text']
+            username = self.request.user
+            post = get_object_or_404(Article, slug=article_slug)
+            comment = Comment.objects.create(post=post, username=username, text=text)
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+        return redirect('article')
 
 
 @login_required
@@ -109,6 +121,7 @@ def search(request):
     context = {"title": f"Результаты поиска по запросу {search_value} ",
                "articles": search_results}
     return render(request, template_name=template, context=context)
+
 
 @login_required
 def change_rating(request, article_slug):
