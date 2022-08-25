@@ -1,5 +1,7 @@
+from django.contrib.auth.models import User
 from django.db import models
 from django.urls import reverse
+from django.utils import timezone
 
 
 class Article(models.Model):
@@ -72,3 +74,16 @@ class GradesArticle(models.Model):
     username = models.CharField(
         verbose_name="Никнейм пользователя",
         max_length=255)
+
+
+class Comment(models.Model):
+    post = models.ForeignKey(Article, on_delete=models.CASCADE, related_name='comments')
+    username = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_name')
+    text = models.TextField()
+    created_date = models.DateTimeField(default=timezone.now)
+
+    class Meta:
+        ordering = ['-created_date']
+
+    def __str__(self):
+        return self.text

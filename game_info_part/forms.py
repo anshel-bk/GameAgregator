@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from captcha.fields import CaptchaField
-from game_info_part.models import Article
+from game_info_part.models import Article, Comment
 
 
 class RegisterUserForm(UserCreationForm):
@@ -61,3 +61,15 @@ class AddArticleForm(forms.ModelForm):
 class ChangeRating(forms.Form):
     CHOICES = [tuple([str(i), i]) for i in range(1, 11)]
     rating = forms.ChoiceField(label="Изменить рейтинг", choices=CHOICES)
+
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ('text',)
+        widgets = {
+            'text': forms.Textarea(attrs={
+                'class': 'form-control',
+                'rows': 3
+            }),
+        }

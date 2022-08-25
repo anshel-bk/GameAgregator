@@ -11,6 +11,31 @@
   <img src="{% get_media_prefix %}{{ data.preview_picture }}" class="figure-img img-fluid rounded" alt="Превью картинка" width="500" height="400">
   <figcaption class="figure-caption"></figcaption>
 </figure>
+    <div class="card my-4">
+    <h5 class="card-header">Прокомментируй:</h5>
+    {% if user.is_authenticated %}
+    <div class="card-body">
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                {{ comment_form.text }}
+            </div>
+            <button type="submit" class="btn btn-primary">Отправить</button>
+        </form>
+    </div>
+    {% else %}
+    <h6 class="card-header"><a href="{% url 'login' %}">Авторизуйтесь</a> или <a href="{% url 'logout' %}">зарегистрируйтесь</a> чтобы оставить комментарий</h6>
+    {% endif %}
+</div>
+{% for comment in data.comments.all %}
+<div class="media mb-4">
+    <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
+    <div class="media-body">
+        <h5 class="mt-0">{{comment.username}}</h5>
+        {{comment.text}}
+    </div>
+</div>
+{% endfor %}
     <span class="title">Оценка<br>статьи</span><br>
     <div href="{% url 'change_rating' article_slug=data.slug %}" class="round">{{ data.rating }}</div>
     <br>
